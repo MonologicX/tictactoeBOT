@@ -6,7 +6,7 @@ from constants import *
 
 pygame.init()
 
-winWidth, winHeight = 1020, 1020
+winWidth, winHeight = 720, 720
 WIN = pygame.display.set_mode((winWidth, winHeight))
 pygame.display.set_caption("TicTacToe")
 
@@ -18,41 +18,31 @@ board = [
     [0, 0, 0]
 ]
 
-TOPLEFT = pygame.Rect(100, 100, 200, 200)
-TOPMID = pygame.Rect(310, 100, 300, 200)
-TOPRIGHT = pygame.Rect(310, 100, 200, 200)
-
-MIDLEFT = pygame.Rect(310, 310, 200, 200)
-MIDMID = pygame.Rect(310, 310, 200, 200)
-MIDRIGHT = pygame.Rect(310, 310, 200, 200)
-
-BOTLEFT = pygame.Rect(310, 310, 200, 200)
-BOTMID = pygame.Rect(310, 310, 200, 200)
-BOTRIGHT = pygame.Rect(310, 310, 200, 200)
-
 boardRects = [
     [TOPLEFT, TOPMID, TOPRIGHT],
     [MIDLEFT, MIDMID, MIDRIGHT],
     [BOTLEFT, BOTMID, BOTRIGHT]
 ]
 def drawGrid():
-    pygame.draw.rect(WIN, BLACK, pygame.Rect(300, 100, 10, 900))
-    pygame.draw.rect(WIN, BLACK, pygame.Rect(610, 100, 10, 900))
-    pygame.draw.rect(WIN, BLACK, pygame.Rect(100, 300, 900, 10))
-    pygame.draw.rect(WIN, BLACK, pygame.Rect(100, 610, 900, 10))
+    pygame.draw.rect(WIN, BLACK, pygame.Rect(250, 50, 10, 620))
+    pygame.draw.rect(WIN, BLACK, pygame.Rect(460, 50, 10, 620))
+    pygame.draw.rect(WIN, BLACK, pygame.Rect(50, 250, 620, 10))
+    pygame.draw.rect(WIN, BLACK, pygame.Rect(50, 460, 620, 10))
 
-def drawColors():
+def drawSquares():
 
     for row in range(len(board)):
         for square in range(len(board[row])):
             if board[row][square] == 1:
                 pygame.draw.rect(WIN, RED, boardRects[row][square])
+            elif board[row][square] == -1:
+                pygame.draw.rect(WIN, BLUE, boardRects[row][square])
 
 def draw():
 
     WIN.fill(WHITE)
     drawGrid()
-    drawColors()
+    drawSquares()
     pygame.display.update()
 
 def main():
@@ -61,6 +51,7 @@ def main():
     clock.tick(FPS)
 
     gameOver = False
+    turn = 1
 
     while gameOver == False:
 
@@ -73,21 +64,28 @@ def main():
                 yClick = 0
                 print("MouseX: {0}, MouseY: {1}".format(mouseCoords[0], mouseCoords[1]))
 
-                if mouseCoords[0] < 300:
+                if mouseCoords[0] < 250:
                     xClick = 0
-                elif mouseCoords[0] > 600:
+                elif mouseCoords[0] > 460:
                     xClick = 2
-                elif 300 < mouseCoords[0] < 600:
+                elif 250 < mouseCoords[0] < 460:
                     xClick = 1
 
-                if mouseCoords[1] < 300:
+                if mouseCoords[1] < 250:
                     yClick = 0
-                elif mouseCoords[1] > 600:
+                elif mouseCoords[1] > 460:
                     yClick = 2
-                elif 300 < mouseCoords[1] < 600:
+                elif 250 < mouseCoords[1] < 460:
                     yClick = 1
 
-                board[yClick][xClick] = 1
+                #Place Square
+                board[yClick][xClick] = turn
+
+                #Change Turns
+                if turn == 1:
+                    turn = -1
+                elif turn == -1:
+                    turn = 1
 
                 print(board)
 
