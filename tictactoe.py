@@ -45,12 +45,28 @@ def draw():
     drawSquares()
     pygame.display.update()
 
+def clickBox(row, column, currentTurn):
+
+    if board[row][column] == 0:
+
+        #Place Square
+        board[row][column] = currentTurn
+
+        #Change Turns
+        if currentTurn == 1:
+            currentTurn = -1
+        elif currentTurn == -1:
+            currentTurn = 1
+
+    return currentTurn
+
 def main():
 
     clock = pygame.time.Clock()
     clock.tick(FPS)
 
     gameOver = False
+
     turn = 1
 
     while gameOver == False:
@@ -78,14 +94,7 @@ def main():
                 elif 250 < mouseCoords[1] < 460:
                     yClick = 1
 
-                #Place Square
-                board[yClick][xClick] = turn
-
-                #Change Turns
-                if turn == 1:
-                    turn = -1
-                elif turn == -1:
-                    turn = 1
+                turn = clickBox(yClick, xClick, turn)
 
                 print(board)
 
