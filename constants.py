@@ -1,6 +1,7 @@
 import pygame
 
 FPS = 30
+WINWIDTH, WINHEIGHT = 720, 720
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
