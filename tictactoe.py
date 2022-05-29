@@ -18,12 +18,12 @@ class TicTacToe:
             [0, 0, 0],
             [0, 0, 0]
         ]
-
         self.boardRects = [
             [TOPLEFT, TOPMID, TOPRIGHT],
             [MIDLEFT, MIDMID, MIDRIGHT],
             [BOTLEFT, BOTMID, BOTRIGHT]
         ]
+
         self.turn = 1
         self.gameOver = False
         self.winner = 0
@@ -94,7 +94,36 @@ class TicTacToe:
         ]
 
     def botTurn(self):
-        self.clickBox(self.boardRects[random.randint(0, 2)][random.randint(0, 2)])
+
+        targetRow = random.randint(0, 2)
+        targetColumn = random.randint(0, 2)
+
+        for i in range(3):
+            if abs(sum(self.board[i])) == 2:
+                targetRow = i
+                for j in range(3):
+                    if self.board[i][j] == 0:
+                        targetColumn = j
+            if abs(self.board[0][i] + self.board[1][i] + self.board[2][i]) == 2:
+                targetColumn = i
+                for j in range(3):
+                    if self.board[j][i] == 0:
+                        targetRow = j
+        diagonal1 = [self.board[0][0], self.board[1][1], self.board[2][2]]
+        if abs(sum(diagonal1)) == 2:
+            for i in range(3):
+                if diagonal1[i] == 0:
+                    targetRow = i
+                    targetColumn = i
+        diagonal2 = [self.board[2][0], self.board[1][1], self.board[0][2]]
+        if abs(sum(diagonal2)) == 2:
+            for i in range(3):
+                if diagonal2[i] == 0:
+                    targetRow = (2 - i)
+                    targetColumn = i
+
+
+        self.clickBox(self.boardRects[targetRow][targetColumn])
 
     def checkForWin(self):
         win = False
@@ -104,6 +133,10 @@ class TicTacToe:
                 win = True
             if abs(self.board[0][i] + self.board[1][i] + self.board[2][i]) == 3:
                 win = True
+        if abs(self.board[0][0] + self.board[1][1] + self.board[2][2]) == 3:
+            win = True
+        if abs(self.board[2][0] + self.board[1][1] + self.board[0][2]) == 3:
+            win = True
 
         return win
 
