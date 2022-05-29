@@ -5,7 +5,7 @@ import random
 from constants import *
 
 class TicTacToe:
-    def __init__(self, starter=1):
+    def __init__(self):
         pygame.init()
         pygame.display.set_caption("TicTacToe")
 
@@ -24,7 +24,7 @@ class TicTacToe:
             [MIDLEFT, MIDMID, MIDRIGHT],
             [BOTLEFT, BOTMID, BOTRIGHT]
         ]
-        self.turn = starter
+        self.turn = 1
         self.gameOver = False
         self.winner = 0
         self.clock = pygame.time.Clock()
@@ -106,6 +106,7 @@ class TicTacToe:
                 win = True
 
         return win
+
     def checkForDraw(self):
 
         spaceAvailiable = False
